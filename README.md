@@ -27,9 +27,3 @@ A collection of coursework organized by course, including projects maintained as
 | [CS548](CS548-Cloud-Native-Software-Architectures/) | Cloud-Native Software Architectures | Docker and Kubernetes coursework |
 
 See each course README for its projects and further details.
-
-CS351, CS352, and HY469 Team 07 are Git submodules. To clone the collection with these projects, run:
-
-```bash
-git clone --recurse-submodules https://github.com/marselosenka/uni.git
-```
