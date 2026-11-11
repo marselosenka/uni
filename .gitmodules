@@ -1,0 +1,9 @@
+[submodule "CS352-FinalProject"]
+	path = CS352-FinalProject
+	url = https://github.com/marselosenka/CS352-FinalProject.git
+[submodule "CS351-Analysis-and-Design-of-Information-Systems"]
+	path = CS351-Analysis-and-Design-of-Information-Systems
+	url = https://github.com/marselosenka/CS351-Analysis-and-Design-of-Information-Systems.git
+[submodule "HY469-Team07"]
+	path = HY469-Team07
+	url = https://github.com/spadcay/HY469---Team07.git
