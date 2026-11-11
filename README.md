@@ -23,7 +23,7 @@ A collection of coursework organized by course, including projects maintained as
 | [CS364](CS364-Human-Computer-Interaction/) | Human-Computer Interaction | Frontend website and mobile UI prototype |
 | [CS460](CS460-Database-Management-Systems/) | Database Management Systems | SQL and PL/SQL assignments |
 | [CS463](CS463-Information-Retrieval/) | Information Retrieval | Huffman coding, suffix tries, and TF-IDF |
-| [HY469 team project](HY469-Team07/) | Team project | Dressing Assistant application |
+| [CS469](HY469-Team07/) | Modern Topics in Human-Computer Interaction | Dressing Assistant application |
 | [CS548](CS548-Cloud-Native-Software-Architectures/) | Cloud-Native Software Architectures | Docker and Kubernetes coursework |
 
 See each course README for its projects and further details.
