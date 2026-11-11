@@ -1,0 +1,33 @@
+DELETE FROM plan_table;
+COMMIT;
+
+ALTER SESSION SET optimizer_mode = ALL_ROWS;
+ALTER SESSION SET statistics_level = ALL;
+ALTER SESSION SET query_rewrite_enabled = TRUE;
+ALTER SESSION SET query_rewrite_integrity = TRUSTED;
+
+SET LINESIZE 200
+SET PAGESIZE 1000
+SET TIMING ON
+
+EXPLAIN PLAN SET STATEMENT_ID = 'T2D_MOVIE_PART_JOIN' FOR
+SELECT m.year, COUNT(*) AS total_plays
+FROM movie_part m, plays pl
+WHERE m.movieID = pl.movieID
+  AND m.year BETWEEN 1980 AND 1995
+GROUP BY m.year
+ORDER BY m.year;
+
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY(NULL, 'T2D_MOVIE_PART_JOIN', 'ALL'));
+
+SELECT /*+ GATHER_PLAN_STATISTICS */
+       m.year, COUNT(*) AS total_plays
+FROM movie_part m, plays pl
+WHERE m.movieID = pl.movieID
+  AND m.year BETWEEN 1980 AND 1995
+GROUP BY m.year
+ORDER BY m.year;
+
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));

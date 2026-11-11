@@ -1,0 +1,24 @@
+SET SERVEROUTPUT ON;
+
+PROMPT ===== NO CONTENTION: ACCOUNTS BEFORE =====
+SELECT * FROM accounts;
+
+PROMPT ===== NO CONTENTION: TRANSFER_LOG BEFORE =====
+SELECT * FROM transfer_log;
+
+PROMPT ===== NO CONTENTION: CALL safe_transfer =====
+
+BEGIN
+    safe_transfer(
+        P_SRC  => 'GR1601101250000000012300695',
+        P_DEST => 'GR9601101250000000012300696',
+        P_AMT  => 100
+    );
+END;
+/
+
+PROMPT ===== NO CONTENTION: ACCOUNTS AFTER =====
+SELECT * FROM accounts;
+
+PROMPT ===== NO CONTENTION: TRANSFER_LOG AFTER =====
+SELECT * FROM transfer_log;

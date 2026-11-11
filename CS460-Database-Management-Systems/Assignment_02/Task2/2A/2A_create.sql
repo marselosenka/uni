@@ -1,0 +1,153 @@
+SET LINESIZE 200
+SET PAGESIZE 1000
+SET TIMING ON
+
+
+-- Clean old objects if they already exist
+
+DROP VIEW movie_part;
+
+DROP TABLE movie_pre1950 PURGE;
+DROP TABLE movie_1950s PURGE;
+DROP TABLE movie_1960s PURGE;
+DROP TABLE movie_1970s PURGE;
+DROP TABLE movie_1980s PURGE;
+DROP TABLE movie_1990s PURGE;
+DROP TABLE movie_2000s PURGE;
+DROP TABLE movie_2010_plus PURGE;
+
+CREATE TABLE movie_pre1950 AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_pre1950
+ADD CONSTRAINT chk_pre1950
+CHECK (year < 1950) ENABLE VALIDATE;
+
+
+CREATE TABLE movie_1950s AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_1950s
+ADD CONSTRAINT chk_1950s
+CHECK (year >= 1950 AND year < 1960) ENABLE VALIDATE;
+
+
+CREATE TABLE movie_1960s AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_1960s
+ADD CONSTRAINT chk_1960s
+CHECK (year >= 1960 AND year < 1970) ENABLE VALIDATE;
+
+CREATE TABLE movie_1970s AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_1970s
+ADD CONSTRAINT chk_1970s
+CHECK (year >= 1970 AND year < 1980) ENABLE VALIDATE;
+
+CREATE TABLE movie_1980s AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_1980s
+ADD CONSTRAINT chk_1980s
+CHECK (year >= 1980 AND year < 1990) ENABLE VALIDATE;
+
+CREATE TABLE movie_1990s AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_1990s
+ADD CONSTRAINT chk_1990s
+CHECK (year >= 1990 AND year < 2000) ENABLE VALIDATE;
+
+CREATE TABLE movie_2000s AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_2000s
+ADD CONSTRAINT chk_2000s
+CHECK (year >= 2000 AND year < 2010) ENABLE VALIDATE;
+
+CREATE TABLE movie_2010_plus AS
+SELECT * FROM movie WHERE 1 = 0;
+
+ALTER TABLE movie_2010_plus
+ADD CONSTRAINT chk_2010_plus
+CHECK (year >= 2010) ENABLE VALIDATE;
+
+INSERT /*+ APPEND */ INTO movie_pre1950
+SELECT * FROM movie
+WHERE year < 1950;
+
+INSERT /*+ APPEND */ INTO movie_1950s
+SELECT * FROM movie
+WHERE year >= 1950 AND year < 1960;
+
+INSERT /*+ APPEND */ INTO movie_1960s
+SELECT * FROM movie
+WHERE year >= 1960 AND year < 1970;
+
+INSERT /*+ APPEND */ INTO movie_1970s
+SELECT * FROM movie
+WHERE year >= 1970 AND year < 1980;
+
+INSERT /*+ APPEND */ INTO movie_1980s
+SELECT * FROM movie
+WHERE year >= 1980 AND year < 1990;
+
+INSERT /*+ APPEND */ INTO movie_1990s
+SELECT * FROM movie
+WHERE year >= 1990 AND year < 2000;
+
+INSERT /*+ APPEND */ INTO movie_2000s
+SELECT * FROM movie
+WHERE year >= 2000 AND year < 2010;
+
+INSERT /*+ APPEND */ INTO movie_2010_plus
+SELECT * FROM movie
+WHERE year >= 2010;
+
+COMMIT;
+
+CREATE OR REPLACE VIEW movie_part AS
+SELECT * FROM movie_pre1950
+UNION ALL SELECT * FROM movie_1950s
+UNION ALL SELECT * FROM movie_1960s
+UNION ALL SELECT * FROM movie_1970s
+UNION ALL SELECT * FROM movie_1980s
+UNION ALL SELECT * FROM movie_1990s
+UNION ALL SELECT * FROM movie_2000s
+UNION ALL SELECT * FROM movie_2010_plus;
+
+
+BEGIN
+  FOR r IN (
+    SELECT table_name
+    FROM user_tables
+    WHERE table_name IN (
+      'MOVIE_PRE1950',
+      'MOVIE_1950S',
+      'MOVIE_1960S',
+      'MOVIE_1970S',
+      'MOVIE_1980S',
+      'MOVIE_1990S',
+      'MOVIE_2000S',
+      'MOVIE_2010_PLUS'
+    )
+  ) LOOP
+    DBMS_STATS.GATHER_TABLE_STATS(USER, r.table_name, cascade => TRUE);
+  END LOOP;
+END;
+/
+
+-- verify 
+
+SELECT 'movie original' AS table_name, COUNT(*) AS rows_count FROM movie
+UNION ALL SELECT 'movie_pre1950', COUNT(*) FROM movie_pre1950
+UNION ALL SELECT 'movie_1950s', COUNT(*) FROM movie_1950s
+UNION ALL SELECT 'movie_1960s', COUNT(*) FROM movie_1960s
+UNION ALL SELECT 'movie_1970s', COUNT(*) FROM movie_1970s
+UNION ALL SELECT 'movie_1980s', COUNT(*) FROM movie_1980s
+UNION ALL SELECT 'movie_1990s', COUNT(*) FROM movie_1990s
+UNION ALL SELECT 'movie_2000s', COUNT(*) FROM movie_2000s
+UNION ALL SELECT 'movie_2010_plus', COUNT(*) FROM movie_2010_plus
+UNION ALL SELECT 'movie_part view', COUNT(*) FROM movie_part;

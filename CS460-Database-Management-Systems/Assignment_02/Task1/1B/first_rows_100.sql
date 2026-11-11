@@ -1,0 +1,18 @@
+ALTER SESSION SET optimizer_mode = FIRST_ROWS_100;
+
+EXPLAIN PLAN SET STATEMENT_ID = 'T1B_FR100' FOR
+SELECT pl.movieID
+FROM people p, plays pl
+WHERE p.personID = pl.personID
+  AND p.birthYear > 1990;
+
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY(NULL, 'T1B_FR100', 'ALL'));
+
+SELECT /*+ GATHER_PLAN_STATISTICS */ pl.movieID
+FROM people p, plays pl
+WHERE p.personID = pl.personID
+  AND p.birthYear > 1990;
+
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));

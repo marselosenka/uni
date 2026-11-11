@@ -1,0 +1,6 @@
+DROP INDEX idx_plays_movieid;
+
+CREATE INDEX idx_plays_movieID_personID
+ON plays(movieID, personID) INVISIBLE;
+
+EXEC DBMS_STATS.GATHER_INDEX_STATS(USER, 'IDX_PLAYS_MOVIEID_PERSONID');

@@ -1,0 +1,12 @@
+SET SERVEROUTPUT ON;
+
+PROMPT ===== E2 SESSION 2: CALL safe_transfer WHILE ACCOUNT A IS LOCKED =====
+
+BEGIN
+    safe_transfer(
+        P_SRC  => 'GR1601101250000000012300695',
+        P_DEST => 'GR9601101250000000012300696',
+        P_AMT  => 100
+    );
+END;
+/

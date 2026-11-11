@@ -1,0 +1,84 @@
+/** General and Pages **/
+html,body
+{
+    width: 100%;
+    margin: 0px;
+    overflow-x: hidden; 
+}
+
+#page1 {
+    background-color:black;
+}
+#page1_text {
+    color:white;
+    font-size:100%;
+    padding-bottom:3%;
+}
+#page1_title {
+    padding-top:0;
+    color:white;
+    font-size:80px;
+    font-family:'Times New Roman', Times, serif;
+}
+#page3 {
+    background-color:#c0dbbb;
+}
+#page4 {
+    background-color:black;
+}
+#page7 {
+    background-color:black;
+}
+#page8 {
+    background-color:#c0dbbb;
+}
+.color_cefad0 {
+    color:#c0dbbb;
+}
+
+/** Text related  **/
+.w2 {
+    align-items:center;
+    font-size:30px;
+}
+.w3 {  
+    font-size:80px;
+}
+.text-style-custom {
+    font-family:'Times New Roman', Times, sans-serif;
+}
+.elements {
+    padding-top:50px;
+    padding-bottom:50px;
+}
+
+
+
+
+
+/** Images and buttons **/
+.fa {
+    color:black;
+    padding: 20px;
+    font-size: 30px;
+    text-decoration:none;
+}
+
+img:hover {
+    transform:scale(1.2);
+}
+.btn:hover {
+    background-color:white !important;
+}
+.btn-primary:hover {
+    background-color:#c0dbbb !important;
+    
+}
+.btn-primary {
+    background-color:transparent !important;
+    border-color:lightgray !important;
+    border-radius:30px !important;
+}
+.btn-lg {
+    font-size:30px !important;
+}

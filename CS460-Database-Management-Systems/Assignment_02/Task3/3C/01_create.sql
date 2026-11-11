@@ -1,0 +1,15 @@
+CREATE OR REPLACE VIEW active_people AS
+  SELECT personID, personName, birthYear
+  FROM people
+  WHERE birthYear BETWEEN 1960 AND 1990;
+
+DROP MATERIALIZED VIEW mv_active_people;
+
+CREATE MATERIALIZED VIEW mv_active_people
+  BUILD IMMEDIATE
+  REFRESH COMPLETE ON DEMAND AS
+  SELECT personID, personName, birthYear
+  FROM people
+  WHERE birthYear BETWEEN 1960 AND 1990;
+
+EXEC DBMS_STATS.GATHER_TABLE_STATS(USER, 'MV_ACTIVE_PEOPLE');

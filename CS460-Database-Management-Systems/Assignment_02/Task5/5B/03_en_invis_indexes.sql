@@ -1,0 +1,9 @@
+ALTER SESSION SET optimizer_use_invisible_indexes = TRUE;
+
+SELECT /*+ GATHER_PLAN_STATISTICS */
+       pl.personID
+FROM plays pl
+WHERE pl.movieID = 46790;
+
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));

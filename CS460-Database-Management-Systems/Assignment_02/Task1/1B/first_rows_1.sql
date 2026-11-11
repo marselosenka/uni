@@ -1,0 +1,29 @@
+@?/rdbms/admin/utlxplan.sql
+TRUNCATE TABLE plan_table;
+
+ALTER SESSION SET optimizer_mode = FIRST_ROWS_1;
+ALTER SESSION SET statistics_level = ALL;
+
+SET LINESIZE 200
+SET PAGESIZE 1000
+SET TIMING ON
+
+EXPLAIN PLAN 
+SET STATEMENT_ID = 'T1B_FR1'
+FOR
+SELECT pl.movieID
+FROM people p, plays pl
+WHERE p.personID = pl.personID
+  AND p.birthYear > 1990;
+
+SELECT * 
+FROM TABLE(DBMS_XPLAN.DISPLAY(NULL, 'T1B_FR1', 'ALL'));
+
+SELECT /*+ GATHER_PLAN_STATISTICS */
+       pl.movieID
+FROM people p, plays pl
+WHERE p.personID = pl.personID
+  AND p.birthYear > 1990;
+
+SELECT * 
+FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));

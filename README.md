@@ -11,7 +11,7 @@
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?logo=kubernetes&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 
-A collection of coursework organized by course. Each course folder is maintained as a separate Git repository.
+A collection of coursework organized by course in a single repository.
 
 | Course | Subject | Coursework |
 | --- | --- | --- |

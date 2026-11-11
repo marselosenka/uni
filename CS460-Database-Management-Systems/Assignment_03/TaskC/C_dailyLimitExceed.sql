@@ -1,0 +1,50 @@
+SET SERVEROUTPUT ON;
+
+PROMPT ===== DAILY LIMIT: INSERT EXISTING SUCCESS LOG =====
+
+INSERT INTO transfer_log (
+    log_id, src_iban, dst_iban, amount, fee, status, err_code, err_msg
+)
+VALUES (
+    seq_log_id.NEXTVAL,
+    'GR1601101250000000012300695',
+    'GR9601101250000000012300696',
+    900,
+    9,
+    'SUCCESS',
+    NULL,
+    NULL
+);
+
+COMMIT;
+
+PROMPT ===== DAILY LIMIT: TRANSFER_LOG BEFORE =====
+SELECT * FROM transfer_log;
+
+PROMPT ===== DAILY LIMIT: ACCOUNTS BEFORE =====
+SELECT * FROM accounts;
+
+PROMPT ===== DAILY LIMIT: CALL transfer_funds =====
+
+DECLARE
+    V_STATUS  VARCHAR2(50);
+    V_ERR_MSG VARCHAR2(1000);
+BEGIN
+    transfer_funds(
+        P_SRC_IBAN  => 'GR1601101250000000012300695',
+        P_DEST_IBAN => 'GR9601101250000000012300696',
+        P_AMOUNT    => 300,
+        P_STATUS    => V_STATUS,
+        P_ERR_MSG   => V_ERR_MSG
+    );
+
+    DBMS_OUTPUT.PUT_LINE('P_STATUS = ' || V_STATUS);
+    DBMS_OUTPUT.PUT_LINE('P_ERR_MSG = ' || V_ERR_MSG);
+END;
+/
+
+PROMPT ===== DAILY LIMIT ACCOUNTS AFTER =====
+SELECT * FROM accounts;
+
+PROMPT ===== DAILY LIMIT TRANSFER_LOG AFTER =====
+SELECT * FROM transfer_log;

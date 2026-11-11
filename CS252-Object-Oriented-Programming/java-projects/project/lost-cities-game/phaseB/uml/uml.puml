@@ -1,0 +1,329 @@
+@startuml
+abstract class Model.Position.Position {
+- int index
+- String image_path
+- int points
++ int getIndex()
++ int getPoints()
++ String getImage_path()
++ void setIndex(int)
++ void setPoints(int)
++ void setImage_path(String)
+}
+
+
+class Model.Finding.RareFinding {
+- int points
++ int getPoints()
++ void setPoints(int)
+}
+
+
+abstract class Model.Pawns.Pawn {
+- String image_path
+- String image_path_hidden
+- int position
+- CardAnaktoro Anaktoro
+- boolean isHidden
++ String getImage_path()
++ String getImage_path_hidden()
++ int getPosition()
++ boolean isHidden()
++ CardAnaktoro getAnaktoro()
++ void setImage_path(String)
++ void setImage_path_hidden(String)
++ void setPosition(int)
++ void setAnaktoro(CardAnaktoro)
++ void setHidden(boolean)
+}
+
+
+class View.Menu {
+~ JMenu newGame
+~ JMenu saveGame
+~ JMenu ContinueSavedGame
+~ JMenu exitGame
+~ JMenuItem newGameItem
+~ JMenuItem saveGameItem
+~ JMenuItem continueSavedGameItem
+~ JMenuItem exitGameItem
++ JMenuItem getContinueSavedGameItem()
++ JMenuItem getSaveGameItem()
++ JMenuItem getExitGameItem()
++ JMenuItem getNewGameItem()
+}
+
+
+abstract class Model.Finding.Finding {
+- String image_path
+- String name
+- String message
+- String description
++ String getImage_path()
++ String getName()
++ String getDescription()
++ String getMessage()
++ void setImage_path(String)
++ void setName(String)
+}
+
+
+class View.Window {
+}
+abstract class Model.Cards.SpecialCard {
+}
+class View.Table {
+- String image
+- JButton cards
+- JLabel cardsInfo
+- int availableCards
+- int checkPoints
+- Player player_turn
+- JLabel[][] paths
+- Map<Pawn,JLabel> pawnLabels
++ int getAvailableCards()
++ void setAvailableCards(int)
++ int getCheckPoints()
++ void setCheckPoints(int)
++ Player getPlayer_turn()
++ void setPlayer_turn(Player)
++ JButton getCards()
++ void updateCardsInfo()
++ void pawnPosition(String,int,int,Pawn,Color,Player)
+}
+
+
+class Model.Position.SimplePosition {
+}
+class View.playerArea {
+- JLabel myScore
+- int score
+- JLabel myAgalmatakia
+- int agalmatakia
+- JButton myToixografies
+- JButton[] cards
+- JButton[] lastCards
+- ArrayList<Fresco> fresco
+- JLabel faistos
+- JLabel ring
+- JLabel ruto
+- JLabel kosmima
+- String name
+- JLabel playerInfo
++ void initToixografies()
++ void initRareFindings()
++ void disableCard(int)
++ void disable()
++ void enable()
++ void editLastCard(Card[])
++ void setFresco(ArrayList<Fresco>)
++ int getScore()
++ int getAgalmatakia()
++ String getName()
++ JLabel getPlayerInfo()
++ void setAgalmatakia(int)
++ void setMyScore(JLabel)
++ void setPlayerInfo(JLabel)
++ JButton[] getCards()
++ void updateCards(ArrayList<Card>)
++ void updateDisplay(Player)
++ void updatePlayerInfo(String)
+}
+
+
+class View.playerCard {
+- String image
+}
+
+class Model.Gameplay.Board {
+- Position[][] board
+- Player[] Players
+- ArrayList<Finding> findings
+- ArrayList<RareFinding> rareFindings
+- Player player_turn
+- long timer
+- boolean status
+- ArrayList<Card> Cards
+- ArrayList<Card> discardedCards
++ void initBoard()
++ void initPlayerTurn()
++ void initPlayersCards()
++ void initCards()
++ void initFindings()
++ void initRareFindings()
++ int calculateCheckPoints()
++ void shuffleCards()
++ void playCard(Player)
++ ArrayList<Card> getCards()
++ long getTimer()
++ Position[][] getBoard()
++ Player getPlayer_turn()
++ boolean getStatus()
++ ArrayList<Card> getDiscardedCards()
++ void setBoard(Position[][])
++ void setCards(ArrayList<Card>)
++ void setPlayer_turn(Player)
++ void setStatus(boolean)
++ void setTimer(long)
++ Player[] getPlayers()
++ void setPlayers(Player[])
++ void switchTurn()
++ int hasPawnOnAnaktoro(Player,int)
++ Pawn findPawnAtAnaktoro(Player,int)
++ Player decideWinner()
++ int getAnaktoroIndexing(CardAnaktoro)
++ Card drawCard()
+}
+
+
+class Model.Cards.SpecialCards.Ariadne {
+}
+class Model.Cards.NumberCard {
+- int value
++ int getValue()
++ void setValue(int)
+}
+
+
+class Model.Cards.SpecialCards.Minotaur {
+}
+class Model.Pawns.Theseus {
+- int destroyed
+- boolean frozen
++ void setDestroyed(int)
++ int getDestroyed()
++ boolean isFrozen()
++ void setFrozen(boolean)
++ void setCanMove(boolean)
+}
+
+
+class main.Main {
++ {static} void main(String[])
+}
+
+class View.myFresco {
+- JButton button
+- String image_path
++ String getImage_path()
++ JButton getButton()
+}
+
+
+class Model.Position.FindingPosition {
+- boolean activeFinding
+- Finding finding
++ boolean isActiveFinding()
++ void setActiveFinding(boolean)
++ Finding getFinding()
++ void setFinding(Finding)
+}
+
+
+class Control.Controller {
+- Board board
+- Menu menu
+- playerArea pA1
+- playerArea pA2
+- Table table
+- Window vTable
+- List<Board> savedGames
++ void startGame(Player,Player)
++ void Round()
++ boolean CardPlayed(Player,int,int)
++ void drawCard(Player)
++ void playerCardActions(playerArea,Player)
++ boolean hasNOTPlayedOnAnaktoro(playerArea,Player,int)
++ boolean hasPlayedOnAnaktoro(playerArea,Player,int)
++ void FindingPositionHandle(Player,Pawn,FindingPosition)
++ void SimplePositionHandle(Player,SimplePosition)
++ void MinotaurCardPlayed(Player,CardAnaktoro)
++ void UpdatePlayer(playerArea,Player)
++ void saveGame()
++ void initSaveGame()
++ void initNewGame()
++ void continueGame()
++ void exitGame()
+}
+
+
+abstract class Model.Cards.Card {
+- String image_path
+- CardAnaktoro Anaktoro
++ String getImage_path()
++ CardAnaktoro getAnaktoro()
++ void setImage_path(String)
++ void setAnaktoro(CardAnaktoro)
+}
+
+
+class Model.Player {
+- int score
+- ArrayList<Fresco> Findings
+- ArrayList<Card> Cards
+- NumberCard[] lastCards
+- ArrayList<RareFinding> rareFindings
+- Pawn[] pawns
+- String name
+- int snakeGods
++ ArrayList<Card> getCards()
++ ArrayList<Fresco> getFindings()
++ int getScore()
++ Pawn[] getPawns()
++ String getName()
++ Card[] getLastCards()
++ int getSnakeGods()
++ ArrayList<RareFinding> getRareFindings()
++ void setName(String)
++ void setCards(ArrayList<Card>)
++ void setFindings(ArrayList<Fresco>)
++ void setPawns(Pawn[])
++ void setScore(int)
++ void setLastCards(NumberCard[])
++ void setSnakeGods(int)
++ void setRareFindings(ArrayList<RareFinding>)
++ void editLast(NumberCard,CardAnaktoro)
++ void editPawn(int,CardAnaktoro,int)
++ int LastAtAnaktoro(CardAnaktoro)
+}
+
+
+class Model.Finding.SnakeGoddess {
+}
+class Model.Pawns.Archeologist {
+}
+class Model.Finding.Fresco {
+- int points
++ int getPoints()
++ void setPoints(int)
+}
+
+
+enum Model.Cards.CardAnaktoro {
++  KNOSSOS
++  MALIA
++  PHAISTOS
++  ZAKROS
++  NONE
+}
+
+
+
+Model.Finding.Finding <|-- Model.Finding.RareFinding
+View.JMenuBar <|-- View.Menu
+View.JFrame <|-- View.Window
+Model.Cards.Card <|-- Model.Cards.SpecialCard
+View.JLayeredPane <|-- View.Table
+Model.Position.Position <|-- Model.Position.SimplePosition
+View.JLayeredPane <|-- View.playerArea
+View.JButton <|-- View.playerCard
+Model.Cards.SpecialCard <|-- Model.Cards.SpecialCards.Ariadne
+Model.Cards.Card <|-- Model.Cards.NumberCard
+Model.Cards.SpecialCard <|-- Model.Cards.SpecialCards.Minotaur
+Model.Pawns.Pawn <|-- Model.Pawns.Theseus
+View.JButton <|-- View.myFresco
+Model.Position.Position <|-- Model.Position.FindingPosition
+Model.Finding.Finding <|-- Model.Finding.SnakeGoddess
+Model.Pawns.Pawn <|-- Model.Pawns.Archeologist
+Model.Finding.Finding <|-- Model.Finding.Fresco
+@enduml

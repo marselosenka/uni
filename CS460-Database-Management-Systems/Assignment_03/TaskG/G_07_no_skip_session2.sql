@@ -1,0 +1,11 @@
+SET SERVEROUTPUT ON;
+
+PROMPT ===== NO SKIP LOCKED: SESSION 2 START =====
+
+DECLARE
+    V_PROCESSED INTEGER;
+BEGIN
+    process_next_transfer_no_skip(V_PROCESSED);
+    DBMS_OUTPUT.PUT_LINE('Session 2 processed PT_ID = ' || NVL(TO_CHAR(V_PROCESSED), 'NULL'));
+END;
+/

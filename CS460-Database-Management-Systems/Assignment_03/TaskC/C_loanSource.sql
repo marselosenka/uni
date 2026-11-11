@@ -1,0 +1,32 @@
+SET SERVEROUTPUT ON;
+
+PROMPT ===== LOAN SOURCE: ACCOUNTS BEFORE =====
+SELECT * FROM accounts;
+
+PROMPT ===== LOAN SOURCE: CALL transfer_funds =====
+
+DECLARE
+    V_STATUS  VARCHAR2(50);
+    V_ERR_MSG VARCHAR2(1000);
+BEGIN
+    transfer_funds(
+        P_SRC_IBAN  => 'GR7401101250000000012300699',
+        P_DEST_IBAN => 'GR9601101250000000012300696',
+        P_AMOUNT    => 300,
+        P_STATUS    => V_STATUS,
+        P_ERR_MSG   => V_ERR_MSG
+    );
+
+    DBMS_OUTPUT.PUT_LINE('P_STATUS = ' || V_STATUS);
+    DBMS_OUTPUT.PUT_LINE('P_ERR_MSG = ' || V_ERR_MSG);
+
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Procedure raised application error.');
+        DBMS_OUTPUT.PUT_LINE('SQLCODE = ' || SQLCODE);
+        DBMS_OUTPUT.PUT_LINE('SQLERRM = ' || SQLERRM);
+END;
+/
+
+PROMPT ===== LOAN SOURCE: ACCOUNTS AFTER =====
+SELECT * FROM accounts;

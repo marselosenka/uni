@@ -1,0 +1,7 @@
+SELECT /*+ GATHER_PLAN_STATISTICS INDEX(people idx_people_birthyear) */
+       COUNT(*)
+FROM people
+WHERE birthYear = 1975;
+
+SELECT *
+FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(NULL, NULL, 'ALLSTATS LAST'));

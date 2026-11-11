@@ -1,0 +1,10 @@
+SET SERVEROUTPUT ON;
+
+BEGIN
+    unsafe_transfer(
+        P_SRC  => 'GR9601101250000000012300696',
+        P_DEST => 'GR1601101250000000012300695',
+        P_AMT  => 50
+    );
+END;
+/
